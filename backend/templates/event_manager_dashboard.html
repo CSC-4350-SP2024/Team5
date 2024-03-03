@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+{% block content %} 
+
+<div class="container p-5">
+    {% for user in users %}
+    <div class="card m-auto" style="width: 36rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ user[1] }} {{ user[2] }}</h5>
+            <p class="card-text">{{ user[3] }}</p>
+            <p class="card-text">{{ user[4] }}</p>
+            <a href="#" class="btn text-bg-dark send-message-btn" data-bs-toggle="modal" data-bs-target="#sendMessageModal{{ user[3] }}">Send message</a>
+        </div>
+        <div class="modal" id="sendMessageModal{{ user[3] }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Send Message to {{ user[1] }} {{ user[2] }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/manager/send_message" method="post">
+                        <div class="modal-body">
+    
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title:</label> <br>
+                                <input class="form-control" type="text" name="title" id="message-title">
+                                <br>
+                                <label for="message" class="form-label">Message:</label>
+                                <textarea class="form-control" name="message" id="message-content" rows="3"></textarea>
+                                <input type="hidden" name="user_id" value="{{ user[0] }}">
+                                <input type="hidden" name="first_name" value="{{ user[1] }}">
+                                <input type="hidden" name="last_name" value="{{ user[2] }}">
+                                <input type="hidden" name="username" value="{{ user[3] }}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Send"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+
+    {% endfor %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block title %} Notifications {% endblock title%}
+
+{% block content %}
+
+<div class="container p-5">
+    {% for message in unread_messages %}
+    <div class="card text-center m-auto mb-3" style="width: 32rem;">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>{{ message[6] }}</span> <!-- Displaying the title of the message -->
+            <form action="/update_message_status" method="post">
+                <input type="hidden" name="message_id" value="{{ message[0] }}">
+                <button type="submit" class="btn-close"></button> <!-- Dismiss button -->
+            </form>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ message[7] }}</h5> <!-- Displaying the content of the message -->
+            <p class="card-text">Sender: {{ message[2] }}</p> <!-- Displaying the sender's email -->
+            <p class="card-text">Receiver: {{ message[4] }}</p> <!-- Displaying the receiver's name -->
+        </div>
+        <div class="card-footer text-body-secondary">
+            Sent on: {{ message[9] }} <!-- Displaying the sent date -->
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
